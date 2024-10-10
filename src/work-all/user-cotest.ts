@@ -4,7 +4,7 @@ import prisma from '../prisma/db';
 import bcrypt from 'bcrypt'
 import createError from '../Ererr/createError';
 import jwt from 'jsonwebtoken';
-import { boxLoning } from './user-oop';
+import { boxLoning, imoji } from './user-oop';
 
 
 export const usersave = async (req:Request, res:Response, next: NextFunction) => {
@@ -68,8 +68,9 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         { expiresIn: '4d' } 
     );
 
-    res.status(200).json({ msg: "ล็อกอินสำเร็จแล้ว", token });
-    console.log(user, token)
+    const imojis = imoji()
+    res.status(200).json({ msg: `ล็อกอินสำเร็จแล้ว ${imojis}`, token });
+    console.log(user, token, "\n", imojis)
     // res.json({msg: "Hello", user})
     } catch (err) {
         next(err);
