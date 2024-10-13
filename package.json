@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.ts"
+    "start": "node app.ts",
+    "dev": "nodemon app.ts",
+    "resetDB": "node prisma/resetDB.js",
+    "postinstall": "prisma generate",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

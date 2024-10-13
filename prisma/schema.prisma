@@ -16,15 +16,115 @@ datasource db {
 enum Role {
   USER
   ADMIN
-  other
+  OTHER
 }
 
-model user {
-  id       Int     @id @default(autoincrement())
+model User {
+  id       Int       @id @default(autoincrement())
   username String?
   role     Role
   email    String?
   password String?
+  bookings Booking[]
+  stores   Store[]
+
+  @@map("user")
 }
 
+model Markets {
+  id              Int       @id @default(autoincrement())
+  market_name     String?   @db.Text
+  market_location String?   @db.Text
+  city            String?   @db.Text
+  province        String?   @db.Text
+  zones           Zone[]
+  locks           Lock[]
+  bookings        Booking[]
+  holidays        Holiday[]
 
+  @@map("markets")
+}
+
+model Zone {
+  id       Int     @id @default(autoincrement())
+  zone     String  @default("Default Zone")
+  marketId Int
+  market   Markets @relation(fields: [marketId], references: [id])
+  Lock     Lock[]
+
+  @@map("zone")
+}
+
+model Lock {
+  id         Int       @id @default(autoincrement())
+  lock_name  String?   @db.Text
+  status     String    @default("ว่าง") 
+  marketId   Int
+  market     Markets   @relation(fields: [marketId], references: [id])
+  lock_price Decimal   @db.Decimal(10, 2)
+  zoneId     Int
+  zone       Zone      @relation(fields: [zoneId], references: [id])
+  bookings   Booking[] @relation("LockToBooking")
+
+  @@map("lock")
+}
+
+model Booking {
+  id             Int             @id @default(autoincrement())
+  booking_date   DateTime
+  total_amount   Decimal         @db.Decimal(10, 2)
+  discount       Decimal         @default(0.00) @db.Decimal(10, 2)
+  status         String 
+  userId         Int
+  user           User            @relation(fields: [userId], references: [id])
+  marketId       Int
+  market         Markets         @relation(fields: [marketId], references: [id])
+  payment        Payment[]
+  lock           Lock[]          @relation("LockToBooking")
+  bookingDetails BookingDetail[]
+
+  @@map("booking")
+}
+
+model BookingDetail {
+  id         Int      @id @default(autoincrement())
+  bookingId  Int
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+  date       DateTime
+  start_time DateTime
+  end_time   DateTime
+
+  @@map("booking_detail")
+}
+
+model Payment {
+  id            Int      @id @default(autoincrement())
+  bookingId     Int
+  booking       Booking  @relation(fields: [bookingId], references: [id])
+  amount        Decimal  @db.Decimal(10, 2)
+  date          DateTime
+  payment_image String? 
+  status        String   @default("ชำระเส็จสิ้น")
+
+  @@map("payment")
+}
+
+model Holiday {
+  id          Int     @id @default(autoincrement())
+  marketId    Int
+  market      Markets @relation(fields: [marketId], references: [id])
+  day_of_week String 
+
+  @@map("holiday")
+}
+
+model Store {
+  id            Int     @id @default(autoincrement())
+  name_store    String? @db.Text
+  type_store    String? @db.Text
+  details_store String? @db.Text
+  userId        Int
+  user          User    @relation(fields: [userId], references: [id])
+
+  @@map("store")
+}

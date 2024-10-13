@@ -4,18 +4,14 @@ import prisma from '../prisma/db';
 import bcrypt from 'bcrypt'
 import createError from '../Ererr/createError';
 import jwt from 'jsonwebtoken';
-import { boxLoning, imoji } from './user-oop';
+import { userregister, userregisterpost, boxLoning, imoji } from './user-oop';
 
 
 export const usersave = async (req:Request, res:Response, next: NextFunction) => {
     try {
         const { email, username, password, role, compassword } = req.body;
 
-        const usershowemail = await prisma.user.findFirst({
-            where: {
-                email: email
-            }
-        });
+        const usershowemail = await userregister(email)
 
         if (usershowemail) {
             res.status(401).json({ msg: "Email already exists." });
@@ -27,7 +23,6 @@ export const usersave = async (req:Request, res:Response, next: NextFunction) =>
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-
         const newUser = {
             email,
             username,
@@ -35,10 +30,7 @@ export const usersave = async (req:Request, res:Response, next: NextFunction) =>
             role
         };
 
-        const user = await prisma.user.create({
-            data: newUser
-        });
-
+        const user = await userregisterpost(newUser)
         res.status(201).json({ msg: "User created successfully", user });
         console.log(newUser)
     } catch (err) {
@@ -76,3 +68,5 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         next(err);
     }
 };
+
+
