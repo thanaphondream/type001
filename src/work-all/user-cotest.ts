@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt'
 import createError from '../Ererr/createError';
 import jwt from 'jsonwebtoken';
-import { userregister, userregisterpost, boxLoning, imoji, me } from './user-oop';
+import { userregister, userregisterpost, boxLoning, imoji, me } from './all-oop';
 
 
 export const usersave = async (req:Request, res:Response, next: NextFunction) => {

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import createError from '../Ererr/createError';
-import { me } from '../work-all/user-oop';
+import { me } from '../work-all/all-oop';
 
 interface JwtPayload {
     email: string;

@@ -41,3 +41,21 @@ export const me = (email: string) => {
         }
     })
 }
+
+export const market = (data: Prisma.MarketsCreateInput) => {
+    return prisma.markets.create({
+        data: data
+    })
+}
+
+export const marketshowdata = () => {
+    return prisma.markets.findMany()
+}
+
+export const marketsshowid = (id: string) => {
+    return prisma.markets.findFirst({
+        where : {
+            id: Number(id)
+        }
+    })
+}
