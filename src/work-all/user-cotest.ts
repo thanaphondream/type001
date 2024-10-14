@@ -1,10 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { Prisma } from '@prisma/client';
-import prisma from '../prisma/db';
 import bcrypt from 'bcrypt'
 import createError from '../Ererr/createError';
 import jwt from 'jsonwebtoken';
-import { userregister, userregisterpost, boxLoning, imoji } from './user-oop';
+import { userregister, userregisterpost, boxLoning, imoji, me } from './user-oop';
 
 
 export const usersave = async (req:Request, res:Response, next: NextFunction) => {
@@ -56,7 +54,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
     const token = jwt.sign(
         { userId: user.id, email: user.email, role: user.role },
-        process.env.JWT_SECRET || 'your_jwt_secret_key', 
+        process.env.JWT_SECRET || '', 
         { expiresIn: '4d' } 
     );
 
@@ -69,4 +67,11 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+export const mes = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        res.send(req.user)
+    }catch(err){
+        next(err)
+    }
+}
 

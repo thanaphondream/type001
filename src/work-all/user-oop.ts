@@ -33,3 +33,11 @@ export const imoji = () => {
     const randomText: string = bo01[randomIndex];
     return randomText
 }
+
+export const me = (email: string) => {
+    return prisma.user.findFirst({
+        where: {
+            email: email
+        }
+    })
+}
