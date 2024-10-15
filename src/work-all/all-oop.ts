@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma/db';
 import createError from '../Ererr/createError';
+import { NOTFOUND } from 'dns';
 
 export const userregister = async (email: string) => {
     return prisma.user.findFirst({
@@ -55,6 +56,27 @@ export const marketshowdata = () => {
 export const marketsshowid = (id: string) => {
     return prisma.markets.findFirst({
         where : {
+            id: Number(id)
+        }
+    })
+}
+
+export const zonesaves = async (zone: string, marketId: number) => {
+    return await prisma.zone.create({
+        data: {
+            zone,
+            marketId
+        }
+    });
+};
+
+export const zonesshowall = () => {
+    return prisma.zone.findMany()
+}
+
+export const zoneshowids = ( id: string ) => {
+    return prisma.zone.findFirst({
+        where: {
             id: Number(id)
         }
     })

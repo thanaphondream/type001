@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import router from './src/Router/router';
 import markets from './src/Router/markets-roter'
+import zone from './src/Router/zone-roter'
 
 const app = express(); 
 
@@ -12,7 +13,7 @@ app.use(express.json());
 
 app.use('/api', router)
 app.use('/api', markets)
-app.use('/api01', markets)
+app.use('/api', zone)
 
 
 
