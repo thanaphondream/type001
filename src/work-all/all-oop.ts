@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma/db';
 import createError from '../Ererr/createError';
-import { NOTFOUND } from 'dns';
 
 export const userregister = async (email: string) => {
     return prisma.user.findFirst({
@@ -80,4 +79,21 @@ export const zoneshowids = ( id: string ) => {
             id: Number(id)
         }
     })
+}
+
+export const zonesupdate = (
+    zone: Prisma.ZoneUpdateInput, 
+    marketId: Prisma.ZoneUpdateInput, 
+    id: string) => {
+
+        return prisma.zone.update({
+            where: {
+                id: Number(id)
+            },
+            data: {
+                zone: String(zone),
+                marketId: Number(marketId)
+            }
+        })
+    
 }

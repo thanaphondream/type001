@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { zonesaves, zonesshowall, zoneshowids } from './all-oop';
+import { zonesaves, zonesshowall, zoneshowids, zonesupdate } from './all-oop';
 
 export const zonesave = async ( req: Request, res: Response, next: NextFunction) => {
     try{
@@ -27,12 +27,25 @@ export const zoneshowall = async ( req: Request, res: Response, next: NextFuncti
 
 export const zonesshowid = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const { id } = req.body
+        const { id } = req.params
         const zones = await zoneshowids( id )
         res.json(zones)
     }catch(err){
         console.log(err)
         next(err)
         res.status(401).json( { msg: "Type error key 401", err})
+    }
+}
+
+export const zoneupdate = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const { id } = req.params
+        const { zone, marketId } = req.body
+        const zones = await zonesupdate( zone, marketId , id)
+        res.json(zones)
+    }catch(err){
+        console.log(err)
+        next(err)
+        res.status(401).json({ msg: "Error Type key 401", err})
     }
 }
