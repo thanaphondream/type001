@@ -58,9 +58,9 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         { expiresIn: '4d' } 
     );
 
-    const imojis = imoji()
-    res.status(200).json({ msg: `ล็อกอินสำเร็จแล้ว ${imojis}`, token });
-    console.log(user, token, "\n", imojis)
+    // const imojis = imoji()
+    res.status(200).json({ msg: `ล็อกอินสำเร็จแล้ว `, token });
+    console.log(user, token, "\n")
     // res.json({msg: "Hello", user})
     } catch (err) {
         next(err);
