@@ -8,5 +8,6 @@ router.post('/regenter', user.usersave);
 router.post('/Loing', loginUser)
 
 router.get('/me',authenticates, user.mes)
+router.get('/usre', user.mes)
 
 export default router;

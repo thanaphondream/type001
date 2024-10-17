@@ -49,14 +49,29 @@ export const market = (data: Prisma.MarketsCreateInput) => {
 }
 
 export const marketshowdata = () => {
-    return prisma.markets.findMany()
+    return prisma.markets.findMany({
+        include: {
+            zones: true
+        }
+    })
 }
 
 export const marketsshowid = (id: string) => {
     return prisma.markets.findFirst({
         where : {
             id: Number(id)
+        },include: {
+            zones: true
         }
+    })
+}
+
+export const marketsupdates = (data: Prisma.MarketsUpdateInput, id: string) => {
+    return prisma.markets.update({
+        where: {
+            id: Number(id)
+        },
+        data: data
     })
 }
 
