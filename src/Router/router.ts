@@ -5,7 +5,7 @@ import { loginUser } from '../work-all/user-cotest';
 import { authenticates } from '../auth/authenticate';
 
 router.post('/regenter', user.usersave);
-router.post('/Loing', loginUser)
+router.post('/loing', loginUser)
 
 router.get('/me',authenticates, user.mes)
 router.get('/usre', user.mes)
