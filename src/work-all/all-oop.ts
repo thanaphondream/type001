@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma/db';
 import createError from '../Ererr/createError';
+import exp from 'constants';
 
 export const userregister = async (email: string) => {
     return prisma.user.findFirst({

@@ -59,7 +59,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     );
 
     const imojis = imoji()
-    res.status(200).json({ msg: `ล็อกอินสำเร็จแล้ว ${imojis}`, token });
+    res.status(200).json({ msg: `ล็อกอินสำเร็จแล้ว ${imojis}`, token, user });
     console.log(user, token, "\n", imojis)
     // res.json({msg: "Hello", user})
     } catch (err) {
