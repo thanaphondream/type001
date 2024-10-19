@@ -16,7 +16,8 @@ export const zonesave = async ( req: Request, res: Response, next: NextFunction)
 
 export const zoneshowall = async ( req: Request, res: Response, next: NextFunction) => {
     try{
-        const zones = await zonesshowall()
+        const { markets } = req.params
+        const zones = await zonesshowall(markets)
         res.json(zones)
     }catch(err){
         console.log(err)

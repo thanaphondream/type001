@@ -85,8 +85,11 @@ export const zonesaves = async (zone: string, marketId: number) => {
     });
 };
 
-export const zonesshowall = () => {
+export const zonesshowall = (id: string) => {
     return prisma.zone.findMany({
+        where: {
+            marketId: Number(id)
+        },
         include: {
             Lock: true
         }
