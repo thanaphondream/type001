@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma/db';
 import createError from '../Ererr/createError';
-import exp from 'constants';
 
 export const userregister = async (email: string) => {
     return prisma.user.findFirst({
@@ -119,4 +118,35 @@ export const zonesupdate = (
             }
         })
     
+}
+
+export const lockSaves_oop = (
+    lock_name: Prisma.LockCreateInput, 
+    status: Prisma.LockCreateInput, 
+    marketId: Prisma.LockCreateInput, 
+    lock_price: number, 
+    zoneId: Prisma.LockCreateInput) => {
+
+    return prisma.lock.create({
+        data: {
+            lock_name: String(lock_name),
+            status: String(status),
+            marketId: Number(marketId),
+            lock_price: new Prisma.Decimal(lock_price),
+            zoneId: Number(zoneId)
+        }
+    })
+
+}
+
+export const lockget_all = () =>{
+    return prisma.lock.findMany()
+}
+
+export const lcokUpdate_all  = (data: Prisma.LockCreateInput, id: string) => {
+    return prisma.lock.update({
+        where: {
+            id: Number(id)
+        },data: data
+    })
 }
