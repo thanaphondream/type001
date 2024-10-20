@@ -90,7 +90,11 @@ export const zonesshowall = (id: string) => {
             marketId: Number(id)
         },
         include: {
-            Lock: true,
+            Lock: {
+                include: {
+                    bookings: true
+                }
+            },
         }
     })
 }
@@ -149,4 +153,27 @@ export const lcokUpdate_all  = (data: Prisma.LockCreateInput, id: string) => {
             id: Number(id)
         },data: data
     })
+}
+
+export const bookingSave_ = ( booking_date: string, total_amount: string, discount: string, status: string, userId: number, marketId: number) => {
+    const data: Prisma.BookingCreateInput = {
+        booking_date: new Date(booking_date),  
+        total_amount: new Prisma.Decimal(total_amount),  
+        discount: new Prisma.Decimal(discount || 0.00), 
+        status: status,
+        user: { connect: { id: userId } },  
+        market: { connect: { id: marketId } }  
+    }
+
+    return (data)
+}
+
+export const bookingsave = (data: Prisma.BookingCreateInput) => {
+    return prisma.booking.create({
+        data
+    })
+}
+
+export const bookingGit_All = () => {
+    return prisma.booking.findMany()
 }
