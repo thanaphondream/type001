@@ -4,6 +4,7 @@ import cors from "cors";
 import router from './src/Router/router';
 import markets from './src/Router/markets-roter'
 import zone from './src/Router/zone-roter'
+import lock from './src/Router/Lock-roter'
 
 const app = express(); 
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/api', router)
 app.use('/api', markets)
 app.use('/api', zone)
+app.use('/api', lock)
 
 
 

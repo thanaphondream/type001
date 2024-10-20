@@ -29,7 +29,6 @@ export const lockUpdate = async (req: Request, res: Response, next: NextFunction
     try{
       const { id } = req.params
       const { lock_name, status, marketId, lock_price, zoneId } = req.body
-
       const data: Prisma.LockCreateInput = {
         lock_name,
         status: status || 'ว่าง', 

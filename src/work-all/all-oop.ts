@@ -90,7 +90,7 @@ export const zonesshowall = (id: string) => {
             marketId: Number(id)
         },
         include: {
-            Lock: true
+            Lock: true,
         }
     })
 }
