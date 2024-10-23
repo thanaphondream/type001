@@ -6,6 +6,7 @@ import markets from './src/Router/markets-roter'
 import zone from './src/Router/zone-roter'
 import lock from './src/Router/Lock-roter'
 import boooking from './src/Router/Bookings-roter'
+import paymet from './src/Router/Paymet-roter'
 
 const app = express(); 
 
@@ -18,6 +19,7 @@ app.use('/api', markets)
 app.use('/api', zone)
 app.use('/api', lock)
 app.use('/api', boooking)
+app.use('/api', paymet)
 
 
 

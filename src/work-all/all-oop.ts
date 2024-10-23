@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma/db';
 import createError from '../Ererr/createError';
+import { connect } from 'http2';
 
 export const userregister = async (email: string) => {
     return prisma.user.findFirst({
@@ -176,4 +177,32 @@ export const bookingsave = (data: Prisma.BookingCreateInput) => {
 
 export const bookingGit_All = () => {
     return prisma.booking.findMany()
+}
+
+export const bookingUpdate = (booking: Prisma.BookingUpdateInput, Id: string) => {
+    return prisma.booking.update({
+        where: {
+            id: Number(Id)
+        },
+        data: booking
+    })
+}
+
+export const paymet_modelDate = (amount: string, date: string, payment_image: string, status: string, bookingId: number) => {
+    
+    const data: Prisma.PaymentCreateInput = {
+        amount: new Prisma.Decimal(amount),
+        date: new Date(date),
+        payment_image: payment_image,
+        status: status,
+        booking: { connect: { id: bookingId } }
+
+    }
+    return(data)
+}
+
+export const payment_SaveModel = ( payment: Prisma.PaymentCreateInput) => {
+    return prisma.payment.create({
+        data: payment
+    })
 }
