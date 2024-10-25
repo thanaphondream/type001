@@ -195,7 +195,7 @@ export const paymet_modelDate = (amount: string, date: string, payment_image: st
         date: new Date(date),
         payment_image: payment_image,
         status: status,
-        booking: { connect: { id: bookingId } }
+        booking: { connect: { id: Number(bookingId) } }
 
     }
     return(data)
