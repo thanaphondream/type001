@@ -17,12 +17,13 @@ export const authenticates = async ( request: Request, res: Response, next: Next
 
         const verify = jwt.verify(tokens, process.env.JWT_SECRET|| '1')as JwtPayload;
         const user  = await me(verify.email)
-        console.log(verify)
+        console.log(user?.email)
         if(verify)
         if (user?.email) {
-            request.user = user;
+            request.body.user = user;
+            request.body.user.id = user.id
           }
-          console.log(request.user)
+        //   console.log(request.user)
           next();
     }catch(err){
         console.log(err)

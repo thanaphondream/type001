@@ -69,6 +69,8 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
 export const mes = async (req: Request, res: Response, next: NextFunction) => {
     try{
+        const user = req.body.user
+        console.log("Get me ", {user})
         res.send(req.user)
     }catch(err){
         next(err)

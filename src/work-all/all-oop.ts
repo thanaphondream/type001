@@ -36,10 +36,16 @@ export const imoji = () => {
 }
 
 export const me = (email: string) => {
-    return prisma.user.findFirst({
+    return prisma.user.findFirstOrThrow({
         where: {
             email: email
-        }
+        },
+       select:{
+        id : true,
+        username: true,
+        email: true,
+        password: true
+       }
     })
 }
 
@@ -204,5 +210,23 @@ export const paymet_modelDate = (amount: string, date: string, payment_image: st
 export const payment_SaveModel = ( payment: Prisma.PaymentCreateInput) => {
     return prisma.payment.create({
         data: payment
+    })
+}
+
+export const paymet_Update_OOP = (payment: Prisma.PaymentUpdateInput, id: string) => {
+    return prisma.payment.update({
+        where: {
+            id : Number(id)
+        }, data:  payment
+    })
+}
+
+export const payment_show_User = (user: string) => {
+    return prisma.booking.findMany({
+        where: {
+            userId: Number(user)
+        }, include: {
+            payment: true
+        }
     })
 }
