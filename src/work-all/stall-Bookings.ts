@@ -3,8 +3,9 @@ import { bookingGit_All, bookingSave_, bookingsave, bookingUpdate} from './all-o
 
 export const bookingsbody = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const { booking_date, total_amount, discount, status, userId, marketId} = req.body
-        const booking =  bookingSave_(booking_date, total_amount, discount, status, userId, marketId)
+        const { booking_date, total_amount, discount, status, userId, marketId, lockIds } = req.body
+        console.log(booking_date, total_amount, discount, status, userId, marketId, lockIds)
+        const booking =  bookingSave_(booking_date, total_amount, discount, status, userId, marketId, lockIds )
 
         if (booking) {
             req.body.booking = booking; 

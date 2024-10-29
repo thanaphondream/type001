@@ -162,27 +162,45 @@ export const lcokUpdate_all  = (data: Prisma.LockCreateInput, id: string) => {
     })
 }
 
-export const bookingSave_ = ( booking_date: string, total_amount: string, discount: string, status: string, userId: number, marketId: number) => {
+export const bookingSave_ = (
+    booking_date: string,
+    total_amount: string,
+    discount: string,
+    status: string,
+    userId: number,
+    marketId: number,
+    lockIds: number[]
+) => {
     const data: Prisma.BookingCreateInput = {
-        booking_date: new Date(booking_date),  
-        total_amount: new Prisma.Decimal(total_amount),  
-        discount: new Prisma.Decimal(discount || 0.00), 
+        booking_date: new Date(booking_date),
+        total_amount: new Prisma.Decimal(total_amount),
+        discount: new Prisma.Decimal(discount || '0.00'),
         status: status,
-        user: { connect: { id: userId } },  
-        market: { connect: { id: marketId } }  
-    }
+        user: { connect: { id: userId } },
+        market: { connect: { id: marketId } },
+        lock: {
+            connect: lockIds.map((lockId) => ({ id: lockId }))
+        }
+    };
 
-    return (data)
-}
+    return data;
+};
 
 export const bookingsave = (data: Prisma.BookingCreateInput) => {
     return prisma.booking.create({
-        data
+        data,
+        include: {
+            lock: true, 
+        }
     })
 }
 
 export const bookingGit_All = () => {
-    return prisma.booking.findMany()
+    return prisma.booking.findMany({
+        include: {
+            lock: true
+        }
+    })
 }
 
 export const bookingUpdate = (booking: Prisma.BookingUpdateInput, Id: string) => {
