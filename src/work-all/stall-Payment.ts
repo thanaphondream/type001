@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { paymet_modelDate, payment_SaveModel, paymet_Update_OOP, payment_show_User } from './all-oop'
+import { paymet_modelDate, payment_SaveModel, paymet_Update_OOP, payment_show_User, Paymet_Sh_Opp } from './all-oop'
 import cloudUpload from '../middlewares/CloudUpload'
+import exp from 'constants'
 
 export const payment_model = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -87,5 +88,16 @@ export const payment_show = async (req: Request, res: Response, next: NextFuncti
         console.log(err)
         next(err)
         res.status(401).json({ msg: " Type Error key 401 ", err})
+    }
+}
+
+export const paymet_ShowAll = async (req: Request, res: Response, next: NextFunction) =>{
+    try{
+        const paymets = await Paymet_Sh_Opp()
+        res.json(paymets)
+    }catch(err){
+        console.log(err)
+        next(err)
+        res.status(401).json({ msg: " Type Error key 401 " , err})
     }
 }

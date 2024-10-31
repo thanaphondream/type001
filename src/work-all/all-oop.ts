@@ -248,3 +248,7 @@ export const payment_show_User = (user: string) => {
         }
     })
 }
+
+export const Paymet_Sh_Opp = () => {
+    return prisma.payment.findMany()
+}
