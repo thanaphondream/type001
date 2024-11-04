@@ -71,7 +71,7 @@ export const mes = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const user = req.body.user
         console.log("Get me ", {user})
-        res.send(req.user)
+        res.send(req.body.user)
     }catch(err){
         next(err)
     }

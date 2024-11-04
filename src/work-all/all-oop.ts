@@ -208,7 +208,8 @@ export const bookingsave = (data: Prisma.BookingCreateInput) => {
 export const bookingGit_All = () => {
     return prisma.booking.findMany({
         include: {
-            lock: true
+            lock: true,
+            market: true
         }
     })
 }
