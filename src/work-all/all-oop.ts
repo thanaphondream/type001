@@ -163,7 +163,7 @@ export const lcokUpdate_all  = (data: Prisma.LockCreateInput, id: string) => {
 }
 
 export const lock_Id = (lock: string) => {
-    return prisma.lock.findMany({
+    return prisma.lock.findFirst({
         where: {
             id: Number(lock)
         }
