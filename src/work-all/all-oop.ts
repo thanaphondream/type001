@@ -166,6 +166,8 @@ export const lock_Id = (lock: string) => {
     return prisma.lock.findFirst({
         where: {
             id: Number(lock)
+        }, include: {
+            zone: true
         }
     })
 }
