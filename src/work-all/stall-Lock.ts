@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { lockSaves_oop, lockget_all, lcokUpdate_all } from './all-oop';
+import { lockSaves_oop, lockget_all, lcokUpdate_all, lock_Id } from './all-oop';
 import { Prisma } from '@prisma/client';
 
 export const lockSave = async ( req: Request, res: Response, next: NextFunction) => {
@@ -48,5 +48,17 @@ export const lockUpdate = async (req: Request, res: Response, next: NextFunction
         console.log(err)
         next(err)
         res.status(401).json({ msg: "Type Error key 401 ", err})
+    }
+}
+
+export const LockSone_Id = async (req: Request, res: Response, next: NextFunction ) => {
+    try{
+        const { lock } = req.params
+        const locks = await lock_Id(lock)
+        res.json(locks)
+    }catch(err) {
+        console.log(err)
+        next(err)
+        res.status(400).json({ msg: "Type Error key 401", err})
     }
 }

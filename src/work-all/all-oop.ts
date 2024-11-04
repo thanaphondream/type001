@@ -162,6 +162,14 @@ export const lcokUpdate_all  = (data: Prisma.LockCreateInput, id: string) => {
     })
 }
 
+export const lock_Id = (lock: string) => {
+    return prisma.lock.findMany({
+        where: {
+            id: Number(lock)
+        }
+    })
+}
+
 export const bookingSave_ = (
     booking_date: string,
     total_amount: string,
