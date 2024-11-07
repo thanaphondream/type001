@@ -223,6 +223,14 @@ export const bookingUpdate = (booking: Prisma.BookingUpdateInput, Id: string) =>
     })
 }
 
+export const booking_show_user = (user: string) => {
+    return prisma.booking.findMany({
+        where: {
+            userId: Number(user)
+        }
+    })
+}
+
 export const paymet_modelDate = (amount: string, date: string, payment_image: string, status: string, bookingId: number) => {
     
     const data: Prisma.PaymentCreateInput = {

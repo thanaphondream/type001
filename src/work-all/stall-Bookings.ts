@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { bookingGit_All, bookingSave_, bookingsave, bookingUpdate} from './all-oop'
+import { bookingGit_All, bookingSave_, bookingsave, bookingUpdate, booking_show_user} from './all-oop'
 
 export const bookingsbody = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -66,5 +66,16 @@ export const bookings_Update = async (req: Request, res: Response, next: NextFun
         console.log(err)
         next(err)
         res.status(401).json({ msg: "Error Type key 401", err})
+    }
+}
+
+export const Booking_User_Show = async(req: Request, res: Response, next: NextFunction) => {
+    try{
+        const bookings = await booking_show_user(req.body.user.id)
+        res.json(bookings)
+    }catch(err){
+        console.log(err)
+        next(err)
+        res.status(400).json({ msg: "Error Type key 401 ",err})
     }
 }
