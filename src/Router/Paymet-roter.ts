@@ -8,5 +8,6 @@ router.post('/paymet',authenticates, upload.array('payment_image', 1), paymet.pa
 router.put('/paymet/:paymet', authenticates, upload.array('payment_image', 2), paymet.payment_model, paymet.paymet_Id, paymet.Paymet_Update)
 router.get('/payment/:paymet', authenticates, paymet.paymet_Id, paymet.payment_show)
 router.get('/paymets', paymet.paymet_ShowAll)
+router.post('/QRcode', paymet.paymet_Qrcode)
 
 export default router;

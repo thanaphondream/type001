@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
 import { paymet_modelDate, payment_SaveModel, paymet_Update_OOP, payment_show_User, Paymet_Sh_Opp } from './all-oop'
 import cloudUpload from '../middlewares/CloudUpload'
-import exp from 'constants'
+import QRCode from 'qrcode'
+import generatePayload from 'promptpay-qr'
+// import bodyParser  from 'body-parser'
+import _ from 'lodash'
 
 export const payment_model = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -99,5 +102,38 @@ export const paymet_ShowAll = async (req: Request, res: Response, next: NextFunc
         console.log(err)
         next(err)
         res.status(401).json({ msg: " Type Error key 401 " , err})
+    }
+}
+
+
+export const paymet_Qrcode = async (req: Request, res: Response) => {
+    // const amount = parseFloat(_.get(req.body, 'amount', '0'));
+    const { amount } = req.body
+    if (amount == null || isNaN(Number(amount))) {
+        res.status(400).json({ msg: 'Amount must be a valid number', amount });
+    }
+    const mobileNumber = '0647641385';
+    const payload = generatePayload(mobileNumber, { amount });
+
+    const option = {
+        color: {
+            dark: '#000',
+            light: '#fff',
+        },
+    };
+
+    try {
+        const url = await QRCode.toDataURL(payload, option);
+         res.status(200).json({
+            RespCode: 200,
+            RespMessage: 'good',
+            Result: url,
+        });
+    } catch (err) {
+        console.error('generate fail:', err);
+         res.status(400).json({
+            RespCode: 400,
+            RespMessage: 'bad: ' + err,
+        });
     }
 }
