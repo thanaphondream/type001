@@ -242,7 +242,6 @@ export const booking_oop_updatestatus = (status: Prisma.BookingUpdateInput, id: 
 }
 
 export const paymet_modelDate = (amount: string, date: string, payment_image: string, status: string, bookingId: number) => {
-    
     const data: Prisma.PaymentCreateInput = {
         amount: new Prisma.Decimal(amount),
         date: new Date(date),

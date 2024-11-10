@@ -34,6 +34,7 @@ export const payment_model = async (req: Request, res: Response, next: NextFunct
 export const payment_save = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const paymet = req.body.payment
+        console.log(paymet)
         const paymets = await payment_SaveModel(paymet)
 
         if(!paymets){
