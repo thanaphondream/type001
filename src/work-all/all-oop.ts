@@ -233,6 +233,14 @@ export const booking_show_user = (user: string) => {
     })
 }
 
+export const booking_oop_updatestatus = (status: Prisma.BookingUpdateInput, id: string) => {
+    return prisma.booking.update({
+        where: {
+            id: Number(id)
+        },data: status
+    })
+}
+
 export const paymet_modelDate = (amount: string, date: string, payment_image: string, status: string, bookingId: number) => {
     
     const data: Prisma.PaymentCreateInput = {
