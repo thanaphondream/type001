@@ -227,6 +227,8 @@ export const booking_show_user = (user: string) => {
     return prisma.booking.findMany({
         where: {
             userId: Number(user)
+        },include: {
+            market: true
         }
     })
 }
