@@ -84,6 +84,7 @@ export const Booking_UpdateStatus = async (req:Request, res: Response, next: Nex
     try{
         const { status } = req.body
         const id = req.body.Id
+        console.log(status)
         const bookings = await booking_oop_updatestatus(status, id)
         res.status(201).json({ msg: "Update Status Ok", bookings})
     }catch(err){
