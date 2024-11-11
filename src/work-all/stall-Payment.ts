@@ -7,29 +7,35 @@ import generatePayload from 'promptpay-qr'
 import _ from 'lodash'
 
 export const payment_model = async (req: Request, res: Response, next: NextFunction) => {
-    try{
-        const { amount, date, status, bookingId } = req.body
-        console.log(47, amount, date, status, bookingId)
-
-        const imagePromises = (req.files as Express.Multer.File[]).map(file => CloudUpload(file.path)); 
-        const imageUrls = await Promise.all(imagePromises);
-
-        const imageUrl = imageUrls[0];
-
-        const params = paymet_modelDate(amount, date, imageUrl, status, bookingId);
-
-        if(!params){
-            res.status(400).json({ msg: " ERROR data key 400"})
-        } 
-
-        req.body.payment = params
-        next()
-    }catch(err){
-        console.log(err)
-        next(err)
-        res.status(401).json({ msg: " Type Error key 401",err})
+    try {
+      const { amount, date, status, bookingId } = req.body;
+      console.log(47, amount, date, status, bookingId);
+  
+      // ตรวจสอบว่ามีไฟล์อัปโหลดหรือไม่
+      if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+         res.status(400).json({ msg: 'No files uploaded' });
+      }
+  
+      const imagePromises = (req.files as Express.Multer.File[]).map(file => 
+        CloudUpload(file.buffer, file.originalname) // ใช้ buffer แทน path
+      );
+      const imageUrls = await Promise.all(imagePromises);
+  
+      const imageUrl = imageUrls[0]; // ใช้ URL ของภาพแรก
+  
+      const params = paymet_modelDate(amount, date, imageUrl, status, bookingId);
+  
+      if (!params) {
+         res.status(400).json({ msg: 'ERROR data key 400' });
+      }
+  
+      req.body.payment = params;
+      next();
+    } catch (err) {
+      console.log(err);
+      res.status(401).json({ msg: 'Type Error key 401', err });
     }
-}
+  };
 
 export const payment_save = async (req: Request, res: Response, next: NextFunction) => {
     try{
