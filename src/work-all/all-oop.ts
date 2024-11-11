@@ -237,7 +237,9 @@ export const booking_oop_updatestatus = (status: Prisma.BookingUpdateInput, id: 
     return prisma.booking.update({
         where: {
             id: Number(id)
-        },data: status
+        },data: {
+            status: String(status)
+        }
     })
 }
 
