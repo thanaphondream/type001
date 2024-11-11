@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { paymet_modelDate, payment_SaveModel, paymet_Update_OOP, payment_show_User, Paymet_Sh_Opp } from './all-oop'
-import cloudUpload from '../middlewares/CloudUpload'
+import CloudUpload from '../middlewares/CloudUpload'
 import QRCode from 'qrcode'
 import generatePayload from 'promptpay-qr'
 // import bodyParser  from 'body-parser'
@@ -11,7 +11,7 @@ export const payment_model = async (req: Request, res: Response, next: NextFunct
         const { amount, date, status, bookingId } = req.body
         console.log(47, amount, date, status, bookingId)
 
-        const imagePromises = (req.files as Express.Multer.File[]).map(file => cloudUpload(file.path)); 
+        const imagePromises = (req.files as Express.Multer.File[]).map(file => CloudUpload(file.path)); 
         const imageUrls = await Promise.all(imagePromises);
 
         const imageUrl = imageUrls[0];

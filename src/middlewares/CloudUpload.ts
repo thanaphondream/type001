@@ -1,6 +1,6 @@
 import cloudinary from '../config/cloudinary'; 
 
-const cloudUpload = async (filePath: string): Promise<string> => {
+const CloudUpload = async (filePath: string): Promise<string> => {
   try {
     const result = await cloudinary.uploader.upload(filePath);
     return result.secure_url; 
@@ -10,4 +10,4 @@ const cloudUpload = async (filePath: string): Promise<string> => {
   }
 };
 
-export default cloudUpload;
+export default CloudUpload;
